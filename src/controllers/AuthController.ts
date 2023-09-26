@@ -1,4 +1,4 @@
-import { Request, Response} from "express"
+import { Request, Response } from "express"
 import { loginUserService, registerUserService } from "../service/AuthService"
 import { addUserService, getUserValuesByUIDService } from "../service/UserService";
 import { generateToken } from "../helpers/Auth";
@@ -26,7 +26,9 @@ export const loginUser = async (req: Request, res: Response) => {
 export const registerUser = async (req: Request, res: Response) => {
 
 
-    const { firstName, lastName, email, password } = req.body;
+    const { user } = req.body;
+    const { firstName, lastName, email, password } = user;
+    console.log(firstName, lastName, email, password);
 
     try {
 

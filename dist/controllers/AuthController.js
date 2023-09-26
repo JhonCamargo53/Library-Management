@@ -28,7 +28,9 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.loginUser = loginUser;
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { firstName, lastName, email, password } = req.body;
+    const { user } = req.body;
+    const { firstName, lastName, email, password } = user;
+    console.log(firstName, lastName, email, password);
     try {
         if (firstName && lastName && email && password) {
             const user = yield (0, AuthService_1.registerUserService)(email, password);
