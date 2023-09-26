@@ -27,7 +27,7 @@ const getBooksService = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getBooksService = getBooksService;
 const addBookService = (book) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield firebase_1.default.collection('books').add(book);
+        yield firebase_1.default.collection('books').add(Object.assign(Object.assign({}, book), { availability: true }));
     }
     catch (error) {
         throw error;

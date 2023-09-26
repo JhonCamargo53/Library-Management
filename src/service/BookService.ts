@@ -18,7 +18,7 @@ export const getBooksService = async () => {
 export const addBookService = async (book: IBook) => {
     try {
 
-        await database.collection('books').add(book);
+        await database.collection('books').add({...book,availability:true});
 
     } catch (error) {
         throw error;
