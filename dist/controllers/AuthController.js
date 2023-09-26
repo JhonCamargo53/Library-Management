@@ -22,6 +22,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(201).json({ message: 'Inicio de sesión exitoso', user, token });
     }
     catch (error) {
+        console.log(error);
         res.status(400).send('Error al iniciar sesión' + error);
     }
 });
@@ -44,6 +45,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (error) {
+        console.log(error);
         res.status(400).send('Error al registrar usuario' + error);
     }
 });

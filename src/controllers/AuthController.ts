@@ -17,6 +17,7 @@ export const loginUser = async (req: Request, res: Response) => {
         res.status(201).json({ message: 'Inicio de sesión exitoso', user, token });
 
     } catch (error) {
+        console.log(error);
         res.status(400).send('Error al iniciar sesión' + error);
     }
 
@@ -47,6 +48,7 @@ export const registerUser = async (req: Request, res: Response) => {
         }
 
     } catch (error) {
+        console.log(error);
         res.status(400).send('Error al registrar usuario' + error);
     }
 
