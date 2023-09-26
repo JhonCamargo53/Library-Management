@@ -18,9 +18,9 @@ export const addBook = async (req: Request, res: Response) => {
 
         const { book } = req.body;
 
-        await addBookService(book);
+        const response = await addBookService(book);
 
-        res.status(201).send("Libro guardado con exito");
+        res.status(201).send({id:response.id,availability:true, ...book});
 
     } catch (error) {
         console.log(error);

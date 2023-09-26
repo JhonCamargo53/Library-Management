@@ -25,8 +25,8 @@ exports.getBooks = getBooks;
 const addBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { book } = req.body;
-        yield (0, BookService_1.addBookService)(book);
-        res.status(201).send("Libro guardado con exito");
+        const response = yield (0, BookService_1.addBookService)(book);
+        res.status(201).send(Object.assign({ id: response.id, availability: true }, book));
     }
     catch (error) {
         console.log(error);
