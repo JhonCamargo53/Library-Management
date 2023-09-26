@@ -35,7 +35,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (firstName && lastName && email && password) {
             const user = yield (0, AuthService_1.registerUserService)(email, password);
             yield (0, UserService_1.addUserService)(user === null || user === void 0 ? void 0 : user.uid, {
-                role: 2,
+                role: 1,
                 firstName: firstName,
                 lastName: lastName,
                 email: email

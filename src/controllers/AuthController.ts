@@ -37,7 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
             const user = await registerUserService(email, password);
 
             await addUserService(user?.uid as string, {
-                role: 2,
+                role: 1,
                 firstName: firstName,
                 lastName: lastName,
                 email: email
