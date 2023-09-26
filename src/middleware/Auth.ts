@@ -31,14 +31,14 @@ export const verifyAdminToken = (req: Request, res: Response, next: NextFunction
 
         const validatedToken = jwt.verify(token, process.env.JWTKEY || 'NOT TOKEN USED') as any
 
-        const { user } = validatedToken
+        const {role} = JSON.parse(validatedToken.user);
 
-        if (user.role !== 1) return res.status(401).send('Token no valido - No cuentas con los permisos necesarios')
+        if (role !== 0) return res.status(401).send('Token no valido - No cuentas con los permisos necesarios')
 
         return next()
 
     } catch (error) {
-        console.log(error)
+        console.log(error + " ")
         return res.status(40).send('Error al validar credenciales' + error)
     }
 

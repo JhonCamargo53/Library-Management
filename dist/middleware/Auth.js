@@ -30,13 +30,13 @@ const verifyAdminToken = (req, res, next) => {
         if (!token)
             return res.status(401).send('Se requiere un token de acceso');
         const validatedToken = jsonwebtoken_1.default.verify(token, process.env.JWTKEY || 'NOT TOKEN USED');
-        const { user } = validatedToken;
-        if (user.role !== 1)
+        const { role } = JSON.parse(validatedToken.user);
+        if (role !== 0)
             return res.status(401).send('Token no valido - No cuentas con los permisos necesarios');
         return next();
     }
     catch (error) {
-        console.log(error);
+        console.log(error + " ");
         return res.status(40).send('Error al validar credenciales' + error);
     }
 };
