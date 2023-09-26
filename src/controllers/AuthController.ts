@@ -43,7 +43,11 @@ export const registerUser = async (req: Request, res: Response) => {
                 email: email
             });
 
-            res.status(201).json({ message: 'Inicio de sesión exitoso', user });
+            const registeredUser = await getUserValuesByUIDService(user?.uid as string);
+
+            const token = generateToken(JSON.stringify(registeredUser));
+    
+            res.status(201).json({ message: 'Inicio de sesión exitoso', user:registeredUser, token });
 
         } else {
             res.status(500).send("Completa toda la información del usuario para completar el registro.");

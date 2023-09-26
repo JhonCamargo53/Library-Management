@@ -40,7 +40,9 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                 lastName: lastName,
                 email: email
             });
-            res.status(201).json({ message: 'Inicio de sesión exitoso', user });
+            const registeredUser = yield (0, UserService_1.getUserValuesByUIDService)(user === null || user === void 0 ? void 0 : user.uid);
+            const token = (0, Auth_1.generateToken)(JSON.stringify(registeredUser));
+            res.status(201).json({ message: 'Inicio de sesión exitoso', user: registeredUser, token });
         }
         else {
             res.status(500).send("Completa toda la información del usuario para completar el registro.");
