@@ -21,7 +21,7 @@ const getBooksService = () => __awaiter(void 0, void 0, void 0, function* () {
         return bookList;
     }
     catch (error) {
-        console.log(error);
+        throw error;
     }
 });
 exports.getBooksService = getBooksService;
@@ -32,7 +32,7 @@ const getAvailableBooksService = () => __awaiter(void 0, void 0, void 0, functio
         return bookList;
     }
     catch (error) {
-        console.log(error);
+        throw error;
     }
 });
 exports.getAvailableBooksService = getAvailableBooksService;

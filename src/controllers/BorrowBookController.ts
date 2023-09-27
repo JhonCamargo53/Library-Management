@@ -1,12 +1,26 @@
 import { Request, Response } from "express";
-import { borrowBookService, returnBookService } from "../service/BorrowBookService";
+import { borrowBookService, getUserBorrowsService, returnBookService } from "../service/BorrowBookService";
 import { tokenDecode } from "../helpers/Auth";
 import { IUser } from "../interface";
+
+export const getUserBorrows = async (req: Request, res: Response) => {
+    try {
+
+        const { id } = tokenDecode(req.headers.authorization?.replace("Bearer", "").trim() as string);
+        const bookList = await getUserBorrowsService(id as string);
+        res.status(201).send(bookList);
+
+    } catch (error) {
+        res.status(500).send("Error al obtener los libros");
+        console.log(error);
+    }
+}
+
 
 export const borrowBook = async (req: Request, res: Response) => {
     try {
 
-        const {bookId} = req.params;
+        const { bookId } = req.params;
 
         const { id } = tokenDecode(req.headers.authorization?.replace("Bearer", "").trim() as string);
 

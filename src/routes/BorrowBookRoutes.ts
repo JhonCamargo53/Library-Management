@@ -1,10 +1,12 @@
 import Router from 'express';
-import { borrowBook, returnBook } from '../controllers/BorrowBookController';
+import { borrowBook, getUserBorrows, returnBook } from '../controllers/BorrowBookController';
 import { verifyToken } from '../middleware/Auth';
 
 const borrowBookRouter = Router();
 
+borrowBookRouter.get('/borrowBook/getUserBorrows', verifyToken, getUserBorrows);
 borrowBookRouter.post('/borrowBook/borrowBook/:userId/:bookId', verifyToken, borrowBook);
 borrowBookRouter.delete('/borrowBook/returnBook/:borrowId', verifyToken, returnBook);
+
 
 export default borrowBookRouter;

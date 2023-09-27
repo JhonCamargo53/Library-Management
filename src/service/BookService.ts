@@ -10,7 +10,7 @@ export const getBooksService = async () => {
         return bookList as Array<IBook>;
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 
 }
@@ -24,7 +24,7 @@ export const getAvailableBooksService = async () => {
         return bookList as Array<IBook>;
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 
 }

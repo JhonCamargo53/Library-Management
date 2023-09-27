@@ -9,14 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.returnBook = exports.borrowBook = void 0;
+exports.returnBook = exports.borrowBook = exports.getUserBorrows = void 0;
 const BorrowBookService_1 = require("../service/BorrowBookService");
 const Auth_1 = require("../helpers/Auth");
-const borrowBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserBorrows = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        const { bookId } = req.params;
         const { id } = (0, Auth_1.tokenDecode)((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.replace("Bearer", "").trim());
+        const bookList = yield (0, BorrowBookService_1.getUserBorrowsService)(id);
+        res.status(201).send(bookList);
+    }
+    catch (error) {
+        res.status(500).send("Error al obtener los libros");
+        console.log(error);
+    }
+});
+exports.getUserBorrows = getUserBorrows;
+const borrowBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b;
+    try {
+        const { bookId } = req.params;
+        const { id } = (0, Auth_1.tokenDecode)((_b = req.headers.authorization) === null || _b === void 0 ? void 0 : _b.replace("Bearer", "").trim());
         if (yield (0, BorrowBookService_1.borrowBookService)(id, bookId)) {
             res.status(201).send("Libro prestado con exito");
         }
