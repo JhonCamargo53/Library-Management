@@ -44,15 +44,12 @@ const borrowBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.borrowBook = borrowBook;
 const returnBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _c;
     try {
-        //Validar que quien hace la petición realizo el prestamo (Obtener la id del JWT)
-        const { borrowId } = req.params;
-        if (yield (0, BorrowBookService_1.returnBookService)(borrowId)) {
-            res.status(201).send("Libro devuelto con exito");
-        }
-        else {
-            res.status(400).send("Prestamo de libro no existente");
-        }
+        const { id } = (0, Auth_1.tokenDecode)((_c = req.headers.authorization) === null || _c === void 0 ? void 0 : _c.replace("Bearer", "").trim());
+        const { bookId } = req.params;
+        yield (0, BorrowBookService_1.returnBookService)(bookId, id);
+        res.status(201).send("Libro devuelto con exito");
     }
     catch (error) {
         res.status(500).send("Error al devolver el libro " + error);

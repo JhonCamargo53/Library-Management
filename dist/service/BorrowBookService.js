@@ -56,20 +56,21 @@ const borrowBookService = (userId, bookId) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.borrowBookService = borrowBookService;
-const returnBookService = (borrowId) => __awaiter(void 0, void 0, void 0, function* () {
+const returnBookService = (bookId, userId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const borrowDocRef = firebase_1.default.collection('borrows').doc(borrowId);
-        const borrowDoc = yield borrowDocRef.get();
-        if (borrowDoc.exists) {
-            const borrowData = borrowDoc.data();
-            const borrowBookId = borrowData === null || borrowData === void 0 ? void 0 : borrowData.bookId;
-            yield (0, BookService_1.changeAvailabilityService)(borrowBookId, true);
-            yield borrowDocRef.delete();
-            return true;
-        }
-        else {
-            return false;
-        }
+        const borrowsQuery = yield firebase_1.default.collection('borrows').where('bookId', '==', bookId).get();
+        borrowsQuery.forEach((doc) => __awaiter(void 0, void 0, void 0, function* () {
+            const borrowData = doc.data();
+            if (borrowData.userId === userId) {
+                // Elimina el registro de borrows
+                yield firebase_1.default.collection('borrows').doc(doc.id).delete();
+                // Cambia la disponibilidad del libro a true
+                yield (0, BookService_1.changeAvailabilityService)(bookId, true);
+            }
+            else {
+                throw ('El usuario con ID' + userId + 'no tiene permiso para devolver este libro.');
+            }
+        }));
     }
     catch (error) {
         throw error;

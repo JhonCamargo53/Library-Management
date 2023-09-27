@@ -40,18 +40,13 @@ export const borrowBook = async (req: Request, res: Response) => {
 export const returnBook = async (req: Request, res: Response) => {
     try {
 
-        //Validar que quien hace la petición realizo el prestamo (Obtener la id del JWT)
+        const { id } = tokenDecode(req.headers.authorization?.replace("Bearer", "").trim() as string);
 
-        const { borrowId } = req.params;
+        const { bookId } = req.params;
 
-        if (await returnBookService(borrowId)) {
+        await returnBookService(bookId, id as string)
 
-            res.status(201).send("Libro devuelto con exito");
-
-        } else {
-            res.status(400).send("Prestamo de libro no existente");
-        }
-
+        res.status(201).send("Libro devuelto con exito");
 
     } catch (error) {
         res.status(500).send("Error al devolver el libro " + error);

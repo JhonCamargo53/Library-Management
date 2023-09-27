@@ -7,7 +7,7 @@ export const getUserBorrowsService = async (userId: string) => {
 
     try {
 
-        const bookIds:any = [];
+        const bookIds: any = [];
 
         const borrowsQuery = await database.collection('borrows').where('userId', '==', userId).get();
         borrowsQuery.forEach(borrowDoc => {
@@ -59,28 +59,27 @@ export const borrowBookService = async (userId: string, bookId: string) => {
 
 }
 
-export const returnBookService = async (borrowId: string) => {
+export const returnBookService = async (bookId: string, userId: string) => {
 
     try {
 
-        const borrowDocRef = database.collection('borrows').doc(borrowId);
+        const borrowsQuery = await database.collection('borrows').where('bookId', '==', bookId).get();
 
-        const borrowDoc = await borrowDocRef.get();
+        borrowsQuery.forEach(async (doc) => {
 
-        if (borrowDoc.exists) {
+            const borrowData = doc.data();
 
-            const borrowData = borrowDoc.data();
-            const borrowBookId = borrowData?.bookId;
+            if (borrowData.userId === userId) {
+                // Elimina el registro de borrows
+                await database.collection('borrows').doc(doc.id).delete();
 
-            await changeAvailabilityService(borrowBookId, true);
-            await borrowDocRef.delete();
+                // Cambia la disponibilidad del libro a true
+                await changeAvailabilityService(bookId, true);
 
-            return true;
-
-        } else {
-
-            return false;
-        }
+            } else {
+                throw ('El usuario con ID' + userId + 'no tiene permiso para devolver este libro.');
+            }
+        });
 
     } catch (error) {
         throw error;

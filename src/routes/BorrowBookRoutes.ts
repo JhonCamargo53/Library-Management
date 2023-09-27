@@ -6,7 +6,7 @@ const borrowBookRouter = Router();
 
 borrowBookRouter.get('/borrowBook/getUserBorrows', verifyToken, getUserBorrows);
 borrowBookRouter.post('/borrowBook/borrowBook/:userId/:bookId', verifyToken, borrowBook);
-borrowBookRouter.delete('/borrowBook/returnBook/:borrowId', verifyToken, returnBook);
+borrowBookRouter.delete('/borrowBook/returnBook/:bookId', verifyToken, returnBook);
 
 
 export default borrowBookRouter;
