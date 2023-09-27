@@ -6,9 +6,11 @@ import authRouter from './routes/AuthRoutes';
 
 const app = express();
 var cookieParser = require('cookie-parser');
-require('dotenv').config({ path: '../.env' })
+
+require('dotenv').config({ path: './.env' })
+
 const morgan = require('morgan');
-app.use(express.json({ limit: '5mb' }));
+app.use(express.json({ limit: '5mb' })); 
 
 app.use(cors({ origin: "*" }))
 app.use(express.json())
