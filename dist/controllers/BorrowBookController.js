@@ -11,11 +11,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.returnBook = exports.borrowBook = void 0;
 const BorrowBookService_1 = require("../service/BorrowBookService");
+const Auth_1 = require("../helpers/Auth");
 const borrowBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const { userId, bookId } = req.params;
-        //Obtener la id del usuario del JWT
-        if (yield (0, BorrowBookService_1.borrowBookService)(userId, bookId)) {
+        const { bookId } = req.params;
+        const { id } = (0, Auth_1.tokenDecode)((_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.replace("Bearer", "").trim());
+        if (yield (0, BorrowBookService_1.borrowBookService)(id, bookId)) {
             res.status(201).send("Libro prestado con exito");
         }
         else {

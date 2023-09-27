@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { borrowBookService, returnBookService } from "../service/BorrowBookService";
+import { tokenDecode } from "../helpers/Auth";
+import { IUser } from "../interface";
 
 export const borrowBook = async (req: Request, res: Response) => {
     try {
 
-        const { userId, bookId } = req.params;
+        const {bookId} = req.params;
 
-        //Obtener la id del usuario del JWT
+        const { id } = tokenDecode(req.headers.authorization?.replace("Bearer", "").trim() as string);
 
-        if (await borrowBookService(userId, bookId)) {
+        if (await borrowBookService(id as string, bookId)) {
             res.status(201).send("Libro prestado con exito");
 
         } else {

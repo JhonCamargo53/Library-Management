@@ -5,6 +5,8 @@ export const borrowBookService = async (userId: string, bookId: string) => {
 
     try {
 
+        console.log(await checkBookAvailabilityService(bookId))
+
         if (await checkBookAvailabilityService(bookId)) {
 
             await database.collection('borrows').add({

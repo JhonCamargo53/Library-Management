@@ -17,6 +17,7 @@ const firebase_1 = __importDefault(require("../firebase"));
 const BookService_1 = require("./BookService");
 const borrowBookService = (userId, bookId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log(yield (0, BookService_1.checkBookAvailabilityService)(bookId));
         if (yield (0, BookService_1.checkBookAvailabilityService)(bookId)) {
             yield firebase_1.default.collection('borrows').add({
                 userId,
