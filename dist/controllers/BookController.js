@@ -36,8 +36,8 @@ const addBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.addBook = addBook;
 const updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { book, bookId } = req.body;
-        yield (0, BookService_1.updateBookService)(bookId, book);
+        const { book } = req.body;
+        yield (0, BookService_1.updateBookService)(book.id, book);
         res.status(201).send("Libro actualizado con exito");
     }
     catch (error) {

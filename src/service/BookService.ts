@@ -18,7 +18,7 @@ export const getBooksService = async () => {
 export const addBookService = async (book: IBook) => {
     try {
 
-       return await database.collection('books').add({...book,availability:true});
+        return await database.collection('books').add({ ...book, availability: true });
 
     } catch (error) {
         throw error;
@@ -39,7 +39,13 @@ export const updateBookService = async (bookId: string, updatedBook: IBook) => {
 
     try {
 
-        await database.collection('books').doc(bookId).update(updatedBook);
+        await database.collection('books').doc(bookId).update({
+            title: updatedBook.title,
+            owner: updatedBook.owner,
+            description: updatedBook.description,
+            releaseYear: updatedBook.releaseYear,
+            imgUrl: updatedBook.imgUrl
+        });
 
     } catch (error) {
         throw error;
@@ -60,7 +66,7 @@ export const checkBookAvailabilityService = async (bookId: string) => {
 
 }
 
-export const changeAvailabilityService = async (bookId: string,availability:boolean) => {
+export const changeAvailabilityService = async (bookId: string, availability: boolean) => {
 
     try {
 

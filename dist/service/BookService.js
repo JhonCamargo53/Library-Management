@@ -45,7 +45,13 @@ const deleteBookService = (bookId) => __awaiter(void 0, void 0, void 0, function
 exports.deleteBookService = deleteBookService;
 const updateBookService = (bookId, updatedBook) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield firebase_1.default.collection('books').doc(bookId).update(updatedBook);
+        yield firebase_1.default.collection('books').doc(bookId).update({
+            title: updatedBook.title,
+            owner: updatedBook.owner,
+            description: updatedBook.description,
+            releaseYear: updatedBook.releaseYear,
+            imgUrl: updatedBook.imgUrl
+        });
     }
     catch (error) {
         throw error;

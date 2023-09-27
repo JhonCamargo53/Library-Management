@@ -31,8 +31,8 @@ export const addBook = async (req: Request, res: Response) => {
 export const updateBook = async (req: Request, res: Response) => {
     try {
 
-        const { book, bookId } = req.body;
-        await updateBookService(bookId, book);
+        const { book} = req.body;
+        await updateBookService(book.id, book);
 
         res.status(201).send("Libro actualizado con exito");
 
