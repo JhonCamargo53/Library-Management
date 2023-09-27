@@ -15,7 +15,22 @@ export const getBooksService = async () => {
 
 }
 
+export const getAvailableBooksService = async () => {
+
+    try {
+
+        const data = await database.collection('books').where('availability', '==', true).get();
+        const bookList = data.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return bookList as Array<IBook>;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
 export const addBookService = async (book: IBook) => {
+
     try {
 
         return await database.collection('books').add({ ...book, availability: true });

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.changeAvailabilityService = exports.checkBookAvailabilityService = exports.updateBookService = exports.deleteBookService = exports.addBookService = exports.getBooksService = void 0;
+exports.changeAvailabilityService = exports.checkBookAvailabilityService = exports.updateBookService = exports.deleteBookService = exports.addBookService = exports.getAvailableBooksService = exports.getBooksService = void 0;
 const firebase_1 = __importDefault(require("../firebase"));
 const getBooksService = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -25,6 +25,17 @@ const getBooksService = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getBooksService = getBooksService;
+const getAvailableBooksService = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const data = yield firebase_1.default.collection('books').where('availability', '==', true).get();
+        const bookList = data.docs.map(doc => (Object.assign({ id: doc.id }, doc.data())));
+        return bookList;
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.getAvailableBooksService = getAvailableBooksService;
 const addBookService = (book) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return yield firebase_1.default.collection('books').add(Object.assign(Object.assign({}, book), { availability: true }));

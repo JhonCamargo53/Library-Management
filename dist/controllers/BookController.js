@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBook = exports.updateBook = exports.addBook = exports.getBooks = void 0;
+exports.deleteBook = exports.updateBook = exports.addBook = exports.getAvailableBooks = exports.getBooks = void 0;
 const BookService_1 = require("../service/BookService");
 const getBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -22,6 +22,17 @@ const getBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getBooks = getBooks;
+const getAvailableBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const bookList = yield (0, BookService_1.getAvailableBooksService)();
+        res.status(201).send(bookList);
+    }
+    catch (error) {
+        res.status(500).send("Error al obtener los libros");
+        console.log(error);
+    }
+});
+exports.getAvailableBooks = getAvailableBooks;
 const addBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { book } = req.body;

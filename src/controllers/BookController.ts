@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addBookService, deleteBookService, getBooksService, updateBookService } from "../service/BookService";
+import { addBookService, deleteBookService, getAvailableBooksService, getBooksService, updateBookService } from "../service/BookService";
 
 export const getBooks = async (req: Request, res: Response) => {
     try {
@@ -12,6 +12,20 @@ export const getBooks = async (req: Request, res: Response) => {
         console.log(error);
     }
 }
+
+export const getAvailableBooks = async (req: Request, res: Response) => {
+    try {
+
+        const bookList = await getAvailableBooksService();
+        res.status(201).send(bookList);
+
+    } catch (error) {
+        res.status(500).send("Error al obtener los libros");
+        console.log(error);
+    }
+}
+
+
 
 export const addBook = async (req: Request, res: Response) => {
     try {
