@@ -12,6 +12,7 @@ const verifyToken = (req, res, next) => {
         if (!token)
             return res.status(401).send('Se requiere un token de acceso');
         jsonwebtoken_1.default.verify(token, process.env.JWTKEY || 'NOT TOKEN USED', (error, _decode) => {
+            console.log(error + " ");
             if (error)
                 return res.status(401).send('Token no valido');
             return next();
