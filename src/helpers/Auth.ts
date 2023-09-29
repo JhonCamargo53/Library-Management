@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { IUser } from '../interface'
 
 export const generateToken = (user: string) => {
-    return jwt.sign({user}, process.env.JWTKEY || 'NOT TOKEN USED', { expiresIn: '60m' } )
+    return jwt.sign({user}, process.env.JWTKEY || 'NOT TOKEN USED', { expiresIn: '3600m' } )
 }
 
 export const tokenDecode = (token: string) => {
